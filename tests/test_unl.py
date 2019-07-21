@@ -2,7 +2,7 @@ import unittest
 from restunl.unetlab import *
 from restunl.device import Router
 
-UNETLAB_ADDRESS = '10.14.10.148'
+UNETLAB_ADDRESS = '10.14.10.153'
 USERNAME = 'admin'
 PASSWORD = 'eve'
 LAB_NAME = 'lab2'

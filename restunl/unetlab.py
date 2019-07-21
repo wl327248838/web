@@ -141,8 +141,7 @@ class UnlNode(object):
         self.resp = self.unl.add_object(api_url, data=payload)
         self.node = self._get_node()
         self.id = self.node['id']
-        self.url = self.node['url']
-        self.device.set_url(self.url)
+
 
     def _get_node(self):
         nodes = self.lab.get_nodes().json()['data']
@@ -151,12 +150,13 @@ class UnlNode(object):
     def connect_interface(self, intf_name, net):
         api_call = REST_SCHEMA['connect_interface']
         api_url = api_call.format(api_call, lab_name=append_unl(self.lab.name), node_id=self.id)
+        print(self.id  , net.id    ,  intf_name , get_intf_id(intf_name))
         payload = {get_intf_id(intf_name): net.id}
         resp = self.unl.update_object(api_url, data=payload)
         return resp
 
     def connect_node(self, local_intf, other_node, other_intf):
-        net = self.lab.create_net(name='_'.join([self.device.name, other_node.device.name]))
+        net = self.lab.create_net(name='to'.join([self.device.name, other_node.device.name]))
         resp1 = self.connect_interface(local_intf, net)
         resp2 = other_node.connect_interface(other_intf, net)
         return resp1, resp2
@@ -172,10 +172,5 @@ class UnlNet(object):
         self.unl, self.lab, self.name = lab.unl, lab, name
         payload = {'type': 'bridge', 'name': self.name}
         api_url = api_call.format(api_call, lab_name=append_unl(self.lab.name))
-        self.resp = self.unl.add_object(api_url, data=payload)
-        self.net = self._get_net()
+        self.net = self.unl.add_object(api_url, data=payload).json()['data']
         self.id = self.net['id']
-
-    def _get_net(self):
-        nets = self.lab.get_nets().json()['data']
-        return get_obj_by_name(nets, self.name)

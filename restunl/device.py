@@ -14,9 +14,9 @@ class Device(object):
 
 class Router(Device):
     defaults = {
-        "type":"qemu","template":"vios","config":"Unconfigured","delay":0,"icon":"Router.png",
-        "image":"vios-adventerprisek9-m-15.5.3M","name":"Core Router 1","left":"35%","top":"25%",
-        "ram":"1024","console":"telnet","cpu":1,"ethernet":2,"uuid":"641a4800-1b19-427c-ae87-4a8ee90b7790"
+        "type":"iol","template":"iol","config":"Unconfigured","icon":"Router.png",
+        "image":"L2-ADVENTERPRISEK9-M-15.1-20130726.bin","name":"Core Router 9","left":"35%","top":"25%",
+        "ram":"1024","console":"telnet","cpu":1,"ethernet":2
     }
 
     def __init__(self, name):
